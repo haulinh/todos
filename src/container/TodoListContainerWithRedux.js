@@ -47,7 +47,7 @@ export const TodoListContainerWithRedux = () => {
 
   return (
     <>
-      <h3>Todo List</h3>
+      <h3>Todo List Demo Git</h3>
       <div style={{ display: "flex", gap: 8 }}>
         <input
           value={inputValue}
