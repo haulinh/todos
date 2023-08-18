@@ -4,7 +4,7 @@ import { URL_API_TODOS } from "../container/TodoListContainer";
 import { Link } from "react-router-dom";
 import { Upload } from "./Upload";
 import { useDispatch } from "react-redux";
-import { uploadImage } from "../store/Todos";
+import { uploadImage } from "../store/todos";
 
 export const Todo = ({
   name,

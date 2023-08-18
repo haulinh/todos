@@ -14,8 +14,7 @@ export const Upload = ({onUploadComplete}) => (
     options={{ multi: true }}
     onComplete={(files) => {
       console.log({files})
-      console.log(files[0].fileUrl)
-      onUploadComplete(files[0].fileUrl)
+      files.length !== 0 && onUploadComplete(files[0].fileUrl)
     }}
   >
     {({ onClick }) => <Button onClick={onClick}>Upload</Button>}

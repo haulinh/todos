@@ -8,7 +8,7 @@ import {
   selectTodosDone,
   selectTodosNotDone,
   removeTodo,
-} from "../store/Todos";
+} from "../store/todos";
 
 export const URL_API_TODOS =
   "https://64c7a27aa1fe0128fbd50f0a.mockapi.io/todos";

@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import TodoReducer from '../store/Todos'
+import TodoReducer from './todos'
+import GlobalReducer from '../store/global'
 
 export default configureStore({
     reducer: {
         todos: TodoReducer,
+        global: GlobalReducer
     }
 })
 
