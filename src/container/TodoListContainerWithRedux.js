@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { Todo } from "../components/Todo";
 import { Button, Spinner } from "reactstrap";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewTodo,
-  remove,
   fetchTodos,
   selectTodosDone,
   selectTodosNotDone,
   removeTodo,
-  setA,
 } from "../store/Todos";
-import { useNavigate } from "react-router-dom";
 
 export const URL_API_TODOS =
   "https://64c7a27aa1fe0128fbd50f0a.mockapi.io/todos";
@@ -79,6 +75,7 @@ export const TodoListContainerWithRedux = () => {
                 key={todo.id}
                 name={todo.name}
                 id={todo.id}
+                image={todo.image}
                 done={todo.completed}
                 onDelete={handleDelete}
                 setIdEdit={setIdEdit}

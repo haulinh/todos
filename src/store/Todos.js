@@ -28,6 +28,10 @@ const todosSlice = createSlice({
           (todo) => todo.id === action.payload
         );
         state.todos.splice(indexDelete, 1);
+      })
+      .addCase(uploadImage.fulfilled, (state, action) => {
+        const todoUpdate = state.todos.find((todo) => todo.id === action.payload.id);
+        todoUpdate.image = action.payload.imgUrl
       });
   },
 });
@@ -50,6 +54,19 @@ export const removeTodo = createAsyncThunk(
   async (idDeleted) => {
     await axios.delete(`${URL_API_TODOS}/${idDeleted}`);
     return idDeleted;
+  }
+);
+
+export const uploadImage = createAsyncThunk(
+  "todos/uploadImage",
+  async (params) => {
+    await axios.put(`${URL_API_TODOS}/${params.id}`, {
+      image: params.imgUrl,
+    });
+    return {
+      id: params.id,
+      imgUrl: params.imgUrl,
+    };
   }
 );
 

@@ -2,17 +2,23 @@ import axios from "axios";
 import { Button } from "reactstrap";
 import { URL_API_TODOS } from "../container/TodoListContainer";
 import { Link } from "react-router-dom";
+import { Upload } from "./Upload";
+import { useDispatch } from "react-redux";
+import { uploadImage } from "../store/Todos";
 
 export const Todo = ({
   name,
   done,
   id,
+  image,
   onDelete = () => {},
   onEdit = () => {},
   onSave,
   setIdEdit,
   idEdit,
 }) => {
+  const dispatch = useDispatch();
+
   const handleClick = () => {
     setIdEdit(id);
   };
@@ -29,6 +35,10 @@ export const Todo = ({
     });
   };
 
+  const handleUploadImage = (imgUrl) => {
+    dispatch(uploadImage({ id, imgUrl }));
+  };
+
   return (
     <div
       style={{
@@ -41,6 +51,9 @@ export const Todo = ({
     >
       <div style={{ display: "flex", columnGap: 8 }}>
         <input type="checkbox" checked={done} onChange={handleCheckboxClick} />
+        {image && (
+          <img style={{ width: 50, height: 50 }} src={image} alt={name} />
+        )}
         {id === idEdit ? (
           <input
             value={name}
@@ -62,11 +75,11 @@ export const Todo = ({
           </Button>
         )} */}
 
-        <Link to={`/todos/${id}`} state={{a: 3000}}>
-          <Button color="warning">
-            edit
-          </Button>
+        <Link to={`/todos/${id}`} state={{ a: 3000 }}>
+          <Button color="warning">edit</Button>
         </Link>
+
+        <Upload onUploadComplete={handleUploadImage} />
 
         <Button color="danger" onClick={() => onDelete(id)}>
           delete
