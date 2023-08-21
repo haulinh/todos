@@ -9,8 +9,13 @@ const todosSlice = createSlice({
   initialState: {
     todos: [],
     status: "idle",
+    todosNeedDone: []
   },
-  reducers: {},
+  reducers: {
+    addTodoNeedDone: (state, action) => {
+      state.todosNeedDone.push(action.payload)
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchTodos.fulfilled, (state, action) => {
@@ -78,4 +83,4 @@ export const selectTodosNotDone = (state) =>
 
 export default todosSlice.reducer;
 
-export const { setA } = todosSlice.actions;
+export const { addTodoNeedDone } = todosSlice.actions;

@@ -4,7 +4,7 @@ import { URL_API_TODOS } from "../container/TodoListContainer";
 import { Link } from "react-router-dom";
 import { Upload } from "./Upload";
 import { useDispatch } from "react-redux";
-import { uploadImage } from "../store/todos";
+import { addTodoNeedDone, uploadImage } from "../store/todos";
 
 export const Todo = ({
   name,
@@ -38,6 +38,10 @@ export const Todo = ({
   const handleUploadImage = (imgUrl) => {
     dispatch(uploadImage({ id, imgUrl }));
   };
+
+  const handleAddTodoNeedDone = () => {
+    dispatch(addTodoNeedDone({name, id, image, done}))
+  }
 
   return (
     <div
@@ -74,6 +78,8 @@ export const Todo = ({
             edit
           </Button>
         )} */}
+
+        <Button onClick={handleAddTodoNeedDone} color="primary">Add</Button>
 
         <Link to={`/todos/${id}`} state={{ a: 3000 }}>
           <Button color="warning">edit</Button>

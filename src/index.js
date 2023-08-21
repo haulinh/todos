@@ -16,6 +16,7 @@ import { Col, Row } from "reactstrap";
 import { LoginContainer } from "./container/LoginContainer";
 import { RegisterContainer } from "./container/RegisterConatiner";
 import { RequireAuth } from "./components/RequireAuth";
+import { TodoListNeedDone } from "./container/TodoListNeedDone";
 
 // const App = () => {
 //   const [count, setCount] = useState(0);
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterContainer />,
   },
+  {
+    path: "/todos-need-done",
+    element: <TodoListNeedDone/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

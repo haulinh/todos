@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Todo } from "../components/Todo";
-import { Button, Spinner } from "reactstrap";
+import { Badge, Button, Spinner } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewTodo,
@@ -19,11 +19,12 @@ export const TodoListContainerWithRedux = () => {
   const [inputValue, setInputValue] = useState("");
   const [idEdit, setIdEdit] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const todos = useSelector((state) => state.todos.todos);
   const status = useSelector((state) => state.todos.status);
+  const todosNeedDone = useSelector(state => state.todos.todosNeedDone)
   const todosDone = useSelector(selectTodosDone);
   const todosNotDone = useSelector(selectTodosNotDone);
 
@@ -47,13 +48,17 @@ export const TodoListContainerWithRedux = () => {
   const handleLogout = () => {
     localStorage.clear("user");
     dispatch(setUser({ username: "", password: "" }));
-    navigate('/login')
+    navigate("/login");
   };
 
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h3>Todo List Demo Git</h3>
+        <Button onClick={() => navigate('/todos-need-done')} color="warning">
+          Todo List Need Done 
+          <Badge>{todosNeedDone.length}</Badge>
+        </Button>
         <Button onClick={handleLogout}>Logout</Button>
       </div>
 
