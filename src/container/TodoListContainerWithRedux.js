@@ -9,6 +9,8 @@ import {
   selectTodosNotDone,
   removeTodo,
 } from "../store/todos";
+import { parsePath, useNavigate } from "react-router-dom";
+import { setUser } from "../store/global";
 
 export const URL_API_TODOS =
   "https://64c7a27aa1fe0128fbd50f0a.mockapi.io/todos";
@@ -17,12 +19,17 @@ export const TodoListContainerWithRedux = () => {
   const [inputValue, setInputValue] = useState("");
   const [idEdit, setIdEdit] = useState("");
 
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const todos = useSelector((state) => state.todos.todos);
   const status = useSelector((state) => state.todos.status);
   const todosDone = useSelector(selectTodosDone);
   const todosNotDone = useSelector(selectTodosNotDone);
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, []);
 
   const handleAddTodo = async () => {
     const newTodo = {
@@ -37,13 +44,19 @@ export const TodoListContainerWithRedux = () => {
     dispatch(removeTodo(idDeleted));
   };
 
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, []);
+  const handleLogout = () => {
+    localStorage.clear("user");
+    dispatch(setUser({ username: "", password: "" }));
+    navigate('/login')
+  };
 
   return (
     <>
-      <h3>Todo List Demo Git</h3>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Todo List Demo Git</h3>
+        <Button onClick={handleLogout}>Logout</Button>
+      </div>
+
       <div style={{ display: "flex", gap: 8 }}>
         <input
           value={inputValue}
