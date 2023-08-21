@@ -8,6 +8,8 @@ import {
   selectTodosDone,
   selectTodosNotDone,
   removeTodo,
+  selectTodosFilter,
+  selectTodos,
 } from "../store/todos";
 import { parsePath, useNavigate } from "react-router-dom";
 import { setUser } from "../store/global";
@@ -18,11 +20,16 @@ export const URL_API_TODOS =
 export const TodoListContainerWithRedux = () => {
   const [inputValue, setInputValue] = useState("");
   const [idEdit, setIdEdit] = useState("");
+  const [searchText, setSearchText] = useState('')
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const todos = useSelector((state) => state.todos.todos);
+  // const todos = useSelector(selectTodosFilter(searchText));
+  const todos = useSelector(selectTodos)
+  const todosFilter = todos.filter(todo => todo.name.toLowerCase().includes(searchText.toLowerCase()))
+
+  console.log({todosFilter, searchText})
   const status = useSelector((state) => state.todos.status);
   const todosNeedDone = useSelector(state => state.todos.todosNeedDone)
   const todosDone = useSelector(selectTodosDone);
@@ -55,6 +62,7 @@ export const TodoListContainerWithRedux = () => {
     <>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h3>Todo List Demo Git</h3>
+        <input value={searchText} onChange={e => setSearchText(e.target.value)} placeholder="Search"/>
         <Button onClick={() => navigate('/todos-need-done')} color="warning">
           Todo List Need Done 
           <Badge>{todosNeedDone.length}</Badge>
@@ -88,7 +96,7 @@ export const TodoListContainerWithRedux = () => {
               marginTop: 20,
             }}
           >
-            {todos.map((todo) => (
+            {todosFilter.map((todo) => (
               <Todo
                 key={todo.id}
                 name={todo.name}

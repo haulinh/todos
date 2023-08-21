@@ -9,12 +9,18 @@ const todosSlice = createSlice({
   initialState: {
     todos: [],
     status: "idle",
-    todosNeedDone: []
+    todosNeedDone: [],
   },
   reducers: {
     addTodoNeedDone: (state, action) => {
-      state.todosNeedDone.push(action.payload)
-    }
+      state.todosNeedDone.push(action.payload);
+    },
+    removeTodoNeedDone: (state, action) => {
+      const indexDelete = state.todosNeedDone.findIndex(
+        (todo) => todo.id === action.payload
+      );
+      state.todosNeedDone.splice(indexDelete, 1);
+    },
   },
   extraReducers(builder) {
     builder
@@ -35,8 +41,10 @@ const todosSlice = createSlice({
         state.todos.splice(indexDelete, 1);
       })
       .addCase(uploadImage.fulfilled, (state, action) => {
-        const todoUpdate = state.todos.find((todo) => todo.id === action.payload.id);
-        todoUpdate.image = action.payload.imgUrl
+        const todoUpdate = state.todos.find(
+          (todo) => todo.id === action.payload.id
+        );
+        todoUpdate.image = action.payload.imgUrl;
       });
   },
 });
@@ -76,6 +84,10 @@ export const uploadImage = createAsyncThunk(
 );
 
 export const selectTodos = (state) => state.todos.todos;
+// export const selectTodosFilter = (searchText) => (state) =>
+//   state.todos.todos.filter((todo) =>
+//     todo?.name?.toLowerCase().includes(searchText.toLowerCase())
+//   );
 export const selectTodosDone = (state) =>
   state.todos.todos.filter((todo) => todo.completed);
 export const selectTodosNotDone = (state) =>
@@ -83,4 +95,4 @@ export const selectTodosNotDone = (state) =>
 
 export default todosSlice.reducer;
 
-export const { addTodoNeedDone } = todosSlice.actions;
+export const { addTodoNeedDone, removeTodoNeedDone } = todosSlice.actions;

@@ -40,7 +40,7 @@ export const Todo = ({
   };
 
   const handleAddTodoNeedDone = () => {
-    dispatch(addTodoNeedDone({name, id, image, done}))
+    dispatch(addTodoNeedDone({name, id: crypto.randomUUID(), image, done}))
   }
 
   return (
