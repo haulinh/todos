@@ -15,14 +15,7 @@ import { TodoContainer } from "./container/TodoContainer";
 import { Col, Row } from "reactstrap";
 import { LoginContainer } from "./container/LoginContainer";
 import { RegisterContainer } from "./container/RegisterConatiner";
-
-const expensiveCalculation = (num) => {
-  console.log("Calculating...");
-  for (let i = 0; i < 1000_000_000; i++) {
-    num += 1;
-  }
-  return num;
-};
+import { RequireAuth } from "./components/RequireAuth";
 
 // const App = () => {
 //   const [count, setCount] = useState(0);
@@ -88,24 +81,32 @@ const router = createBrowserRouter([
   },
   {
     path: "/todos",
-    element: <TodoListContainerWithRedux />,
+    element: (
+      <RequireAuth>
+        <TodoListContainerWithRedux />
+      </RequireAuth>
+    ),
   },
   {
     path: "/todos/:id",
-    element: <TodoContainer />,
+    element: (
+      <RequireAuth>
+        <TodoContainer />
+      </RequireAuth>
+    ),
   },
   // {
   //   path: "/test",
   //   element: <App />,
   // },
   {
-    path: '/login',
-    element: <LoginContainer/>
+    path: "/login",
+    element: <LoginContainer />,
   },
   {
-    path: '/register',
-    element: <RegisterContainer/>
-  }
+    path: "/register",
+    element: <RegisterContainer />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -13,6 +13,7 @@ import {
   ToastHeader,
 } from "reactstrap";
 import { setUser } from "../store/global";
+import { useNavigate } from "react-router-dom";
 
 export const URL_API_ACCOUNTS =
   "https://64c7a27aa1fe0128fbd50f0a.mockapi.io/accounts";
@@ -21,6 +22,8 @@ export const LoginContainer = () => {
   const { handleSubmit, control } = useForm();
   const [loginSuccess, setLoginSuccess] = useState(true)
 
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const handleLogin = async (values) => {
@@ -32,6 +35,8 @@ export const LoginContainer = () => {
     if (accountLoginFound && accountLoginFound.password === values.password) {
       setLoginSuccess(true)
       dispatch(setUser(accountLoginFound))
+      localStorage.setItem('user', JSON.stringify(accountLoginFound))
+      navigate('/todos')
     } else {
       setLoginSuccess(false)
     }
